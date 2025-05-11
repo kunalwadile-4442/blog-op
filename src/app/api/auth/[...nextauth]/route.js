@@ -24,6 +24,7 @@ export const authOptions = {
             },
             async authorize(credentials) {
                 await connectDB();
+                console.log("✅ Connected to MongoDB in authorize");
 
                 if (credentials.firstname && credentials.lastname) {
                     // If it's a signup process (has first and last name)
@@ -74,6 +75,7 @@ export const authOptions = {
         async signIn({ user, account }) {
             if (account.provider === "google") {
                 await connectDB();
+                console.log("✅ Connected to MongoDB in Google signIn");
 
                 let existingUser = await User.findOne({ email: user.email });
 
@@ -104,6 +106,7 @@ export const authOptions = {
         async session({ session, token }) {
             // Fetch updated user details from the database
             await connectDB();
+            console.log("✅ Connected to MongoDB in session callback");
 
             try {
                 const dbUser = await User.findById(token.id); // Ensure it's querying `_id`
@@ -119,6 +122,7 @@ export const authOptions = {
                     session.user.name = token.name;
                 }
             } catch (error) {
+                console.log("❌ Error fetching user from DB");
                 console.error("Session callback error:", error);
             }
             return session;

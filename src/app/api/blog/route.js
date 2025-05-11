@@ -8,9 +8,12 @@ import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function GET(req) {
     try {
+        console.log("📡 Connecting to database...");
         await connectDB();
+        console.log("✅ Database connected");
 
         const session = await getServerSession(authOptions);
+        console.log("👤 Session:", session);
 
         if (!session) {
             return new NextResponse(
@@ -29,6 +32,7 @@ export async function GET(req) {
 
         return NextResponse.json({ success: true, blogs }, { status: 200 });
     } catch (error) {
+        console.error("❌ API error:", error);
         return NextResponse.json({ success: false, error: error.message }, { status: 500 });
     }
 }
