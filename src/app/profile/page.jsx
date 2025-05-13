@@ -104,7 +104,7 @@ function ProfilePage() {
 
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("upload_preset", "unsigned_preset");
+        formData.append("upload_preset", "blognew");
 
         setIsProcessingProfilePic(true)
         try {
