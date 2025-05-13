@@ -7,15 +7,17 @@ export async function POST(req) {
         await connectDB();
         const body = await req.json();
 
-        // Calculate read time (approx. 200 words per minute)
-        const words = body.content.split(" ").length;
+        if (!body || !body.title || !body.previewText || !body.content || !body.coverImage || !body.author) {
+            return NextResponse.json({ success: false, error: "Missing required fields" }, { status: 400 });
+        }
+
+        const words = body.content.trim().split(/\s+/).length;
         const readTime = Math.ceil(words / 200);
 
-        // Create a new blog with calculated read time and initialize comments
         const blog = new Blog({
             ...body,
-            readTime, // Set calculated read time
-            comments: [], // Initialize empty comments
+            readTime,
+            comments: [],
         });
 
         await blog.save();

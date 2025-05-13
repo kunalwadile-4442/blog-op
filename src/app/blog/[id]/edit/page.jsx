@@ -104,7 +104,7 @@ export default function EditBlogPage() {
         setUploadingImage(true)
         const formData = new FormData();
         formData.append("file", file); // Add the file to the request
-        formData.append("upload_preset", "unsigned_preset");
+        formData.append("upload_preset", "blognew");
 
         try {
             const res = await fetch(process.env.NEXT_PUBLIC_CLOUDINARY_API_URL, {
